@@ -14,13 +14,10 @@ public class StorePasswordPage extends BasePage {
 
      @FindBy(id="Password")
     private WebElement passwordField;
-   // btn btn--narrow
-
     @FindBy (xpath= "//*[@name='commit' and @type='submit']")
     private WebElement enterButton;
     @FindBy(id="password-modal-heading")
     private WebElement heading;
-
 
 
     public StorePasswordPage verifyStorePasswordPage(){
@@ -29,10 +26,8 @@ public class StorePasswordPage extends BasePage {
        return  this;
     }
 
-    public void nagivagateToHomePage(){
-        writeText(passwordField,"idgad");
-       // WebElement element = driver.findElement(By.id("navigationPageButton"));
-
+    public void nagivagateToHomePage(String password){
+        writeText(passwordField,password);
         actions.moveToElement(enterButton).click().build().perform();
     }
 

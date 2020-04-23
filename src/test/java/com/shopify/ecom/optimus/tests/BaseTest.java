@@ -1,15 +1,14 @@
 package com.shopify.ecom.optimus.tests;
 
-import com.shopify.ecom.optimus.pages.HomePage;
-import com.shopify.ecom.optimus.pages.OptimusEcomsComingSoonPage;
-import com.shopify.ecom.optimus.pages.PageGenerator;
-import com.shopify.ecom.optimus.pages.StorePasswordPage;
+import com.shopify.ecom.optimus.pages.*;
+import com.shopify.ecom.optimus.utilities.ScreenShortUtility;
 import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -25,11 +24,14 @@ public class BaseTest {
     OptimusEcomsComingSoonPage optimusEcomsComingSoonPage;
     StorePasswordPage storePasswordPage;
     HomePage homePage;
+    AddToCartPage addToCartPage;
+    CartPage cartPage;
     @BeforeMethod
     public void setup() {
 
         String browserName = null;
         String url = null;
+        String password=null;
 
         try {
             FileReader fileReader = new FileReader("src/test/resources/TestData.properties");
@@ -37,6 +39,8 @@ public class BaseTest {
             properties.load(fileReader);
             browserName = properties.getProperty("browserName");
             url = properties.getProperty("url");
+            password=properties.getProperty("password");
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
 
@@ -59,11 +63,12 @@ public class BaseTest {
 
         page = new PageGenerator(driver);
         instantiatePages(page);
+
         driver.navigate().to(url);
 
         optimusEcomsComingSoonPage.verifyHomePage().navigateStorePasswordPage();
 
-        storePasswordPage.verifyStorePasswordPage().nagivagateToHomePage();
+        storePasswordPage.verifyStorePasswordPage().nagivagateToHomePage(password);
 
         homePage.verifyHomePage();
 
@@ -74,10 +79,16 @@ public class BaseTest {
         optimusEcomsComingSoonPage = page.getInstance(OptimusEcomsComingSoonPage.class);
         storePasswordPage = page.getInstance(StorePasswordPage.class);
         homePage = page.getInstance(HomePage.class);
+        addToCartPage=page.getInstance(AddToCartPage.class);
+        cartPage =page.getInstance(CartPage.class);
     }
 
     @AfterMethod
-    public void teardown() {
+    public void teardown(ITestResult result) {
+
+             if(ITestResult.FAILURE==result.getStatus()){
+                 ScreenShortUtility.takeScreenShort(driver,result.getName());
+             }
         //driver.quit();
     }
 }

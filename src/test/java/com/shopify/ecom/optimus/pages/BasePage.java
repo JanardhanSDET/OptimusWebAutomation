@@ -1,5 +1,6 @@
 package com.shopify.ecom.optimus.pages;
 
+import com.shopify.ecom.optimus.utilities.ScreenShortUtility;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,9 +20,11 @@ public class BasePage extends PageGenerator {
 
         if (elementAttr.getClass().getName().contains("By")) {
             wait.until(ExpectedConditions.elementToBeClickable((WebElement) elementAttr));
+            ScreenShortUtility.takeScreenShort(driver,elementAttr.toString());
             driver.findElement((By) elementAttr).click();
         } else {
             wait.until(ExpectedConditions.elementToBeClickable((WebElement) elementAttr));
+            ScreenShortUtility.takeScreenShort(driver,elementAttr.toString());
             ((WebElement) elementAttr).click();
         }
     }
@@ -29,14 +32,24 @@ public class BasePage extends PageGenerator {
     public <T> void writeText(T elementAttr, String text) {
         if (elementAttr.getClass().getName().contains("By")) {
             wait.until(ExpectedConditions.visibilityOf((WebElement) elementAttr));
+
+            ScreenShortUtility.takeScreenShort(driver,elementAttr.toString());
+
             driver.findElement((By) elementAttr).sendKeys(text);
         } else {
             wait.until(ExpectedConditions.visibilityOf((WebElement) elementAttr));
+
+            ScreenShortUtility.takeScreenShort(driver,elementAttr.toString());
+
             ((WebElement) elementAttr).sendKeys(text);
         }
     }
 
      public void waitForVisibilityOfElement(WebElement element){
          wait.until(ExpectedConditions.visibilityOf(element));
+     }
+
+     public void waitForElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
      }
 }

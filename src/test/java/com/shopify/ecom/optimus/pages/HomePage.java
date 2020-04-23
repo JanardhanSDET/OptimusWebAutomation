@@ -20,7 +20,9 @@ public class HomePage extends BasePage {
     @FindBy (css="div.predictive-search-wrapper.predictive-search-wrapper--drawer.predictive-search-wrapper--visible")
     private WebElement resultList;
     @FindBy (css = "span.predictive-search-item__title-text")
-    private List<WebElement> listOfTshirtsNames;
+    private WebElement result;
+    @FindBy (css="ul.grid.grid--uniform.grid--view-items>li")
+    private List<WebElement> listOfFeaturedCollection;
 
 
     public HomePage(WebDriver driver) {
@@ -36,13 +38,12 @@ public class HomePage extends BasePage {
     public void searchForItem(String item){
         click(searchButton);
         writeText(searchTextBox,item);
-        waitForVisibilityOfElement(resultList);
-        for(WebElement element : listOfTshirtsNames){
-            if(element.getText().equalsIgnoreCase(item)){
-                click(element);
-            }
-        }
+        click(result);
 
+    }
+
+    public void selectFeaturedCollectionProduct(){
+          click(listOfFeaturedCollection.get(0));
     }
 
 
