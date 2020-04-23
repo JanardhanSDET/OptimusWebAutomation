@@ -9,7 +9,7 @@ public class IncreaseProductQuantityInCartTest extends BaseTest {
     @Test
     public  void  increaseProductQuantityInCart() throws InterruptedException, UserDefinedException {
 
-        homePage.searchForItem("Round Neck Shirt 16");
+        homePage.searchForItem(itemName);
 
         addToCartPage.addItemToCart(ItemColour.Silver, ItemSize.M);
 

@@ -10,11 +10,11 @@ public class SearchProductAndAddToCartTest extends  BaseTest{
     @Test
     public  void addProductToCart() throws UserDefinedException {
 
-           homePage.searchForItem("Round Neck Shirt 16");
+           homePage.searchForItem(itemName);
 
            addToCartPage.addItemToCart(ItemColour.Silver, ItemSize.M);
 
-           cartPage.verifyCart(ItemColour.Silver, ItemSize.M,"Round Neck Shirt 16");
+           cartPage.verifyCart(ItemColour.Silver, ItemSize.M,itemName);
 
 
     }

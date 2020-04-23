@@ -9,7 +9,8 @@ public class AddDifferentSizeTest extends BaseTest {
 
     @Test
     public void addDifferentSizeToCart() throws UserDefinedException {
-        homePage.verifyHomePage().searchForItem("Round Neck Shirt 15");
+
+        homePage.verifyHomePage().searchForItem(itemName);
 
         addToCartPage.addMultipleSize(ItemColour.White, ItemSize.S,ItemSize.M);
     }

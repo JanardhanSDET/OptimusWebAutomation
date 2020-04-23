@@ -26,12 +26,15 @@ public class BaseTest {
     HomePage homePage;
     AddToCartPage addToCartPage;
     CartPage cartPage;
+    String itemName=null;
+
     @BeforeMethod
     public void setup() {
 
         String browserName = null;
         String url = null;
         String password=null;
+
 
         try {
             FileReader fileReader = new FileReader("src/test/resources/TestData.properties");
@@ -40,6 +43,7 @@ public class BaseTest {
             browserName = properties.getProperty("browserName");
             url = properties.getProperty("url");
             password=properties.getProperty("password");
+            itemName=properties.getProperty("itemName");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
